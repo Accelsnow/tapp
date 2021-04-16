@@ -2,6 +2,21 @@ import React from "react";
 import { shallowEqual } from "react-redux";
 
 /**
+ * Compare the two input strings.
+ * @param {string} str1
+ * @param {string} str2
+ * @returns
+ */
+export function compareString(str1: string, str2: string) {
+    if (str1 > str2) {
+        return 1;
+    } else if (str1 < str2) {
+        return -1;
+    }
+    return 0;
+}
+
+/**
  * Capitalizes the input string. The function only capitalizes the first word if there are multiple words in the input string.
  * If `word` isn't a string, it is coerced.
  * @param word a single word.
@@ -40,7 +55,8 @@ export function formatDate(dateString: string): string {
     }
     // Normalize the date string so we can compensate for timezone issues.
     // This string is now formatted YYYY-MM-DD
-    const normalizedDateString = new Date(dateString).toJSON().slice(0, 10);
+    const processedDate = new Date(dateString).toJSON() || "";
+    const normalizedDateString = processedDate.slice(0, 10);
     // Add timezone offset information so that Javascript will
     // interpret the date in the current timezone
     const date = new Date(`${normalizedDateString}T00:00:00.000`);
